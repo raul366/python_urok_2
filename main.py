@@ -20,5 +20,5 @@ async def get_task(task_id: int):
     
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
-        detail=f"Задача с ID {task_id} не найдена"
+        detail=f"Задача с ID {task_id} не найдена."
     )
