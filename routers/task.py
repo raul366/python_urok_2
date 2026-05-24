@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, status
-from .schemas import STaskAdd, STask
+from schemas.task import STaskAdd, STask
 
 router = APIRouter(
     prefix="/tasks",
