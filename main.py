@@ -15,6 +15,6 @@ async def lifespan(app:FastAPI):
     
     print("Выключение сервера")
 
-app = FastAPI()
+app = FastAPI(lifespan=lifespan)
 
 app.include_router(tasks_router)
