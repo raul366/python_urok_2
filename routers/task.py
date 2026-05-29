@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException, status
 from schemas.task import STaskAdd, STask
+from database import SessionDep
 
 router = APIRouter(
     prefix="/tasks",
@@ -9,14 +10,14 @@ router = APIRouter(
 tasks = []
 
 @router.post("", status_code=status.HTTP_201_CREATED)
-async def create_task(task: STaskAdd) -> STask:
+async def create_task(task: STaskAdd, session: SessionDep,) -> STask:
     task_dict = task.model_dump()
     task_dict["id"] = 1
     tasks.append(task_dict)
     return task_dict
 
 @router.get("/{task_id}", response_model=STask)
-async def get_task(task_id: int):
+async def get_task(task_id: int, session: SessionDep,):
     for task in tasks:
         if task["id"] == task_id:
             return task
@@ -27,7 +28,7 @@ async def get_task(task_id: int):
     )
 
 @router.delete("/{task_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_task(task_id: int):
+async def delete_task(task_id: int, session: SessionDep,):
     for index, task in enumerate(tasks):
         if task_id == task["id"]:
             tasks.pop(index)
